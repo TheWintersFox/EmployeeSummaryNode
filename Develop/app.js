@@ -23,11 +23,23 @@ function createManager() {
         type: "Input",
         name: "managersName",
         message: "What is your managers name?",
+    },
+    {
+        type: "Input",
+        name: "email",
+        message: "What is the team members email?",
+    },
+    {
+        type: "Input",
+        name: "id",
+        message: "What is the team members id?",
     }
     ]) .then(answer => {
         // const ManagersName = answer.managerName;
         console.log(answer.managersName)
     })
+
+
 }
 
 createManager()
