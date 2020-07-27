@@ -13,38 +13,135 @@ const render = require("./lib/htmlRenderer");
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-
+const teamMember = [];
 
 function createManager() {
     console.log(`buildyourteamhere`)
 
     inquirer.prompt([
+        {
+            type: "Input",
+            name: "managerName",
+            message: "What is your managers name?",
+        },
+        {
+            type: "Input",
+            name: "managerEmail",
+            message: "What is the team members email?",
+        },
+        {
+            type: "Input",
+            name: "managerId",
+            message: "What is the team members id?",
+        }
     {
-        type: "Input",
-        name: "managersName",
-        message: "What is your managers name?",
-    },
-    {
-        type: "Input",
-        name: "email",
-        message: "What is the team members email?",
-    },
-    {
-        type: "Input",
-        name: "id",
-        message: "What is the team members id?",
-    }
-    ]) .then(answer => {
-        // const ManagersName = answer.managerName;
-        console.log(answer.managersName)
+            type: "Input",
+            name: "managerOfficeNumber",
+            message: "What is the managers office number?",
+        }
+    ]).then(answer => {
+        const Managers = new Manager(answer.managerName, answer.managerEmail, answer.managerId, answer.managerOfficeNumber)
+
+        createTeam()
     })
-
-
 }
 
-createManager()
+function createIntern() {
+    inquirer.prompt([
+        {
+            type: "Input",
+            name: "internName",
+            message: "What is your interns name?",
+        },
+        {
+            type: "Input",
+            name: "internEmail",
+            message: "What is the team members email?",
+        },
+        {
+            type: "Input",
+            name: "internId",
+            message: "What is the team members id?",
+        }
+        {
+            type: "Input",
+            name: "school",
+            message: "What is the interns school?",
+        }
+    ]).then(answer => {
+        const Interns = new Intern(answer.internName, answers.internEmail, answer.internId, answer.school)
 
+        createTeam()
+    })
+}
 
+function createEngineer() {
+    inquirer.prompt([
+        {
+            type: "Input",
+            name: "engineerName",
+            message: "What is your Engineers name?",
+        },
+        {
+            type: "Input",
+            name: "engineerEmail",
+            message: "What is the team members email?",
+        },
+        {
+            type: "Input",
+            name: "engineerId",
+            message: "What is the team members id?",
+        }
+            {
+            type: "Input",
+            name: "github",
+            message: "What is Engineers github?",
+        }
+    ]).then(answer => {
+        const Engineers = new Engineer(answer.engineerName, answer.engineerEmail, answer.engineerId, answer.school)
+
+        createTeam()
+    })
+}
+
+function createTeam() {
+
+    inquirer.prompt([
+        {
+            type: "list",
+            name: "employeeRole",
+            message: "What is this team member's role?",
+            choices: [
+                "Manager",
+                "Intern",
+                "Engineer"
+            ]
+        }]).then(function (answer) {
+            switch (answer.employeeRole) {
+                case "Manager":
+                    createManager()
+                    break;
+                case "Engineer":
+                    createEngineer()
+                    break;
+                    case "Intern":
+                        createIntern()
+                        break;
+                default:
+                    buildTeamMember()
+            }
+        })
+};
+
+function buildTeamMember() {
+    const Employees = render(teamMember);
+    fs.writeFile(outputPath, employees, function(err){
+        if(err){
+            console.log(err);
+        }
+            console.log("Team member entered");
+    })
+};
 
 
 // After the user has input all employees desired, call the `render` function (required
